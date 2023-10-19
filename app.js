@@ -1,11 +1,6 @@
-const DOMSelectors = [
-  {
-    test: document.getElementById("test"),
-    p: document.getElementById("p"),
-  },
-];
+const DOMSelectors = [{ test: document.getElementById("test") }];
 function injectObject(object) {
-  DOMSelectors.push({ object: document.getElementById(object) });
+  DOMSelectors[`${object}`] = document.querySelector(`${object}`);
 }
 function clearObjectInput(object) {
   document.getElementById(object) == "";
@@ -16,23 +11,20 @@ function updateObject(object) {
 function deleteObject(object) {
   delete DOMSelectors.object;
 }
-const reloadObject = (event) => {};
+function reloadObject(object) {
+  object.location.reload();
+}
 function createObject(object) {
   object = document.getElementById(object);
   injectObject(object);
   clearObjectInput(object);
 }
 console.log(DOMSelectors);
-createObject("p");
+const p = "p";
+createObject(p);
 console.log(DOMSelectors);
-//https://www.w3schools.com/js/js_htmldom_elements.asp
 
-//object.update,getelementbyid(object).update()
-
-/*   object.onbeforeunload(() => {
-    before the page unloads it refreshes
-    object.reload();
-  })''
-  */
-
-//research dom injector
+// document.querySelector(blah).insertAdjacentHTML("beforeend",[theactualhtml with backticks])
+//${} for variables inside string
+//.value,.key
+// js includes
