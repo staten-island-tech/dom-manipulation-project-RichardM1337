@@ -1,30 +1,36 @@
-const DOMSelectors = [{ test: document.getElementById("test") }];
-function injectObject(object) {
-  DOMSelectors[`${object}`] = document.querySelector(`${object}`);
+const DOMSelectors = {
+  form: document.querySelector(form),
+  button: document.querySelector(button),
+  card: document.querySelector(card),
+  cardlist: document.getElementsByClassName(listOfCards),
+};
+
+function clearInputField(object) {
+  // clears object
+  // clears input field
+  DOMSelectors.object.value = "";
 }
-function clearObjectInput(object) {
-  document.getElementById(object) == "";
-}
-function updateObject(object) {
-  document.getElementById(object).update();
-}
-function deleteObject(object) {
+function removeObject(object) {
+  //removes object from DOMSelectors
+  // removes object
   delete DOMSelectors.object;
 }
-function reloadObject(object) {
-  object.location.reload();
+function addObject(object) {
+  //adds object to DOMSelectors
+  DOMSelectors.push({
+    key: object,
+    value: object.value,
+  });
 }
 function createObject(object) {
-  object = document.getElementById(object);
-  injectObject(object);
-  clearObjectInput(object);
+  // creates object
+  const object = document.querySelector({ object });
+  addObject(object);
+  clearInputField(object);
 }
-console.log(DOMSelectors);
-const p = "p";
-createObject(p);
-console.log(DOMSelectors);
-
-// document.querySelector(blah).insertAdjacentHTML("beforeend",[theactualhtml with backticks])
-//${} for variables inside string
-//.value,.key
-// js includes
+DOMSelectors.button.addEventListener("click", function (event) {
+  event.preventDefault;
+  let form = DOMSelectors.form.value; // don't forget .value
+  createObject(card);
+  DOMSelectors.cardlist.insertAdjacentHTML("afterbegin", `<p> ${card} </p>`);
+});
