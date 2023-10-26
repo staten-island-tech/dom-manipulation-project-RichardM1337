@@ -1,39 +1,51 @@
-const DOMSelectors = [
-  {
-    form: document.querySelector("form"),
-    button: document.querySelector(".button"),
-    card: document.querySelector("card"),
-    cardlist: document.querySelector(".listOfCards"),
-  },
-];
+const DOMSelectors = {
+  form: document.querySelector("form"),
+  button: document.querySelector(".button"),
+  card: document.querySelector(".card"),
+  cardlist: document.querySelector(".listOfCards"),
+  input: document.querySelector(".firstName"),
+};
 
-function clearInputField(object) {
-  // clears object
+function clearInputField(inputField) {
   // clears input field
-  DOMSelectors.object.value = "";
+  inputField.value = "";
 }
-function removeObject(object) {
-  //removes object from DOMSelectors
-  delete DOMSelectors.object.remove;
+
+function removeObject(objectKey) {
+  // removes property from DOMSelectors
+  delete DOMSelectors[objectKey];
 }
-function addObject(object) {
-  //adds object to DOMSelectors
-  DOMSelectors.push({
-    key: `${object}`,
-    value: document.querySelector(`.${object}`),
-  });
+
+function addObject(objectKey, objectValue) {
+  // adds property to DOMSelectors
+  DOMSelectors[objectKey] = objectValue; // bracket notation lets you access code dynamically
 }
-function createObject(object) {
-  // creates object
-  object = document.querySelector(`.${object}`);
-  addObject(object);
-  clearInputField(object);
+
+function createObject(objectClassName) {
+  // creates and adds an object to DOMSelectors
+  const newObject = document.querySelector(`.${objectClassName}`);
+  addObject(objectClassName, newObject);
+  clearInputField(newObject);
 }
+
 DOMSelectors.button.addEventListener("click", function (event) {
-  event.preventDefault;
-  let form = DOMSelectors.form.value; // don't forget .value
+  event.preventDefault();
+  const inputValue = DOMSelectors.input.value; // don't forget .value
   createObject("card");
-  DOMSelectors.cardlist.insertAdjacentHTML("afterbegin", `<p> ${card}</p>`);
-  DOMSelectors.card.innerHTML(`${form}`);
+  DOMSelectors.cardlist.insertAdjacentHTML(
+    "afterbegin",
+    `<p>${inputValue}</p>`
+  );
 });
-//create img,text,id, add adjacet html when submitted. fix functions mayb
+/*
+const inputValue = DOMSelectors.input.value; // don't forget .value
+  createObject("card");
+  DOMSelectors.cardlist.insertAdjacentHTML(
+    "afterbegin",
+    `<p>${inputValue}</p>`
+  );
+});
+
+
+if (DOMSelectors.card) {
+    DOMSelectors.card.textContent = formValue; // use textContent instead of innerHTML for plain text*/
