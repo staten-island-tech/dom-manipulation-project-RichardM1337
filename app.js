@@ -1,39 +1,36 @@
-const DOMSelectors = [
-  {
-    form: document.querySelector("form"),
-    button: document.querySelector(".button"),
-    card: document.querySelector("card"),
-    cardlist: document.querySelector(".listOfCards"),
-  },
-];
+const DOMSelectors = {
+  form: document.querySelector(".form"),
+  button: document.querySelector(".button"),
+  input: document.querySelector(".firstName"),
+  cardlist: document.querySelector(".listOfCards"),
+};
 
-function clearInputField(object) {
-  // clears object
-  // clears input field
-  DOMSelectors.object.value = "";
+function clearInputField(inputField) {
+  inputField.value = "";
 }
-function removeObject(object) {
-  //removes object from DOMSelectors
-  delete DOMSelectors.object.remove;
+
+function deleteCard(event) {
+  const cardToDelete = event.target.parentElement; // the button is the child
+  DOMSelectors.cardlist.removeChild(cardToDelete);
 }
-function addObject(object) {
-  //adds object to DOMSelectors
-  DOMSelectors.push({
-    key: `${object}`,
-    value: document.querySelector(`.${object}`),
-  });
-}
-function createObject(object) {
-  // creates object
-  object = document.querySelector(`.${object}`);
-  addObject(object);
-  clearInputField(object);
-}
+
 DOMSelectors.button.addEventListener("click", function (event) {
-  event.preventDefault;
-  let form = DOMSelectors.form.value; // don't forget .value
-  createObject("card");
-  DOMSelectors.cardlist.insertAdjacentHTML("afterbegin", `<p> ${card}</p>`);
-  DOMSelectors.card.innerHTML(`${form}`);
+  event.preventDefault();
+
+  const formValue = DOMSelectors.input.value;
+
+  // Create a new list item (card) with the input value and a delete button
+  const card = document.createElement("li");
+  card.innerHTML =
+    //design card
+    `
+    ${formValue}
+    <button class="delete-button">Delete</button>
+  `;
+
+  DOMSelectors.cardlist.appendChild(card);
+  clearInputField(DOMSelectors.input);
 });
-//create img,text,id, add adjacet html when submitted. fix functions mayb
+
+// Event delegation: Listen for clicks on the cardlist and if a delete button was clicked, remove the card
+DOMSelectors.cardlist.addEventListener("click", deleteCard);
