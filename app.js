@@ -1,47 +1,36 @@
 const DOMSelectors = {
-  form: document.querySelector("form"),
   button: document.querySelector(".button"),
-  card: document.querySelector(".card"),
-  cardlist: document.querySelector(".listOfCards"),
+  cardlist: document.querySelector(".cardlist"),
   input: document.querySelector(".firstName"),
 };
-
-function clearInputField(inputField) {
-  // clears input field
-  inputField.value = "";
+function clearInputField(input) {
+  input.value = ""; // self explanatory
 }
 
-function removeObject(objectKey) {
-  // removes property from DOMSelectors
-  delete DOMSelectors[objectKey];
+function deleteObject(event) {
+  const selectedObject = event.target; // event will target said object
+  if (selectedObject.classList.contains("delete-button")) {
+    // if the object contains a delete button (eg: one of our divs)
+    selectedObject.parentElement.remove(); // delete its parent element
+  }
 }
+function injectObject(input) {
+  const newCard = document.createElement("div"); // create a div
+  newCard.innerHTML = `<div>
+    <p>${input}</p>
+  </div>
+  <button class="delete-button">Delete</button>`; // make the div's paragraph have the input and the delete button
+  DOMSelectors.cardlist.appendChild(newCard); // put new card in cardlist (test)
+  newCard
+    .querySelector(".delete-button")
+    .addEventListener("click", deleteObject); // if delete button clicked, run deleteObject
+}
+function createObject(input) {} //testingtesting
 
-function addObject(objectName, objectClassName) {
-  // adds property to DOMSelectors
-  const objectQuery = document.querySelector(`.${objectClassName}`); // tells dom where it is
-  DOMSelectors[objectName] = [objectQuery];
-}
-
-function createObject(objectName, objectClassName) {
-  // creates and adds an object to DOMSelectors
-  addObject(objectName, objectClassName); // adds it to DOMSelectors
-  clearInputField(objectName);
-}
 DOMSelectors.button.addEventListener("click", function (event) {
-  event.preventDefault();
-  const inputValue = DOMSelectors.input.value; // don't forget .value
-  const card = document.createElement("li");
-  card.innerHTML = `<p>${inputValue}</p>
-    <button type="button" class="delete-button">delete this card</button>`;
-  DOMSelectors.cardlist.appendChild(card);
-  clearInputField(DOMSelectors.input);
+  event.preventDefault(); // don't reload
+  const input = DOMSelectors.input.value; // take user input
+  injectObject(input); // calls injectObject
+  DOMSelectors.cardlist.appendChild(card); // put new card in cardlist (test also)
+  clearInputField(DOMSelectors.input); //clears inputfield
 });
-
-createObject("delete-button", "delete-button");
-DOMSelectors.delete.addEventListener("click", function (event) {
-  const parentCard = event.target.parentElement;
-  DOMSelectors.cardlist.removeChild(parentCard);
-});
-
-// agenda
-// do not accept empty forms
