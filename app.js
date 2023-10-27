@@ -14,23 +14,28 @@ function deleteObject(event) {
     selectedObject.parentElement.remove(); // delete its parent element
   }
 }
-function injectObject(input) {
-  const newCard = document.createElement("div"); // create a div
-  newCard.innerHTML = `<div>
-    <p>${input}</p>
+function injectObject(input, card) {
+  if (input) {
+    // if the input is not null please continue wtih the code
+    card.innerHTML = `<div>
+    <h1>THIS IS YOUR CARD!!! WOAH!!!!</h1>
+    <p>${input}</p> <!-- put code --!>
   </div>
   <button class="delete-button">Delete</button>`; // make the div's paragraph have the input and the delete button
-  DOMSelectors.cardlist.appendChild(newCard); // put new card in cardlist (test)
-  newCard
-    .querySelector(".delete-button")
-    .addEventListener("click", deleteObject); // if delete button clicked, run deleteObject
+    DOMSelectors.cardlist.appendChild(card); // put new card in cardlist (test)
+    card
+      .querySelector(".delete-button")
+      .addEventListener("click", deleteObject); // if delete button clicked, run deleteObject
+  }
 }
-function createObject(input) {} //testingtesting
+function createObject(input) {
+  const newCard = document.createElement("div"); // create a div
+  injectObject(input, newCard);
+} //testingtesting
 
 DOMSelectors.button.addEventListener("click", function (event) {
   event.preventDefault(); // don't reload
   const input = DOMSelectors.input.value; // take user input
-  injectObject(input); // calls injectObject
-  DOMSelectors.cardlist.appendChild(card); // put new card in cardlist (test also)
+  createObject(input); // calls injectObject
   clearInputField(DOMSelectors.input); //clears inputfield
 });
