@@ -18,12 +18,12 @@ function deleteObject(event) {
 function injectObject(input, card) {
   if (input) {
     // if the input is not null please continue wtih the code
-    card.innerHTML = `<div>
+    card.innerHTML = `<div class="innercard">
     <h1>THIS IS YOUR CARD!!! WOAH!!!!</h1>
     <p>${input}</p> <!-- put input --!>
   </div>
   <button class="delete-button">Delete</button>`; // make the div's paragraph have the input and the delete button
-    DOMSelectors.cardlist.appendChild(card); // put new card in cardlist (test)
+    DOMSelectors.cardlist.appendChild(card); // put new card in cardlist
     card
       .querySelector(".delete-button")
       .addEventListener("click", deleteObject); // if delete button clicked, run deleteObject
@@ -31,6 +31,7 @@ function injectObject(input, card) {
 }
 function createObject(input) {
   const newCard = document.createElement("div"); // create a div
+  newCard.classList.add("carddiv"); // adds "carddiv" to class list
   injectObject(input, newCard);
 }
 
