@@ -8,10 +8,11 @@ function clearInputField(input) {
 }
 
 function deleteObject(event) {
-  const selectedObject = event.target; // event will target said object
+  const selectedObject = event.target; // event will target said object that was clicked
   if (selectedObject.classList.contains("delete-button")) {
-    // if the object contains a delete button (eg: one of our divs)
-    selectedObject.parentElement.remove(); // delete its parent element
+    // if the object classlist contains a deletebutton
+    console.log(selectedObject.parentElement); // select the whole div
+    selectedObject.parentElement.remove(); // delete the whole div
   }
 }
 function injectObject(input, card) {
@@ -19,7 +20,7 @@ function injectObject(input, card) {
     // if the input is not null please continue wtih the code
     card.innerHTML = `<div>
     <h1>THIS IS YOUR CARD!!! WOAH!!!!</h1>
-    <p>${input}</p> <!-- put code --!>
+    <p>${input}</p> <!-- put input --!>
   </div>
   <button class="delete-button">Delete</button>`; // make the div's paragraph have the input and the delete button
     DOMSelectors.cardlist.appendChild(card); // put new card in cardlist (test)
@@ -31,7 +32,7 @@ function injectObject(input, card) {
 function createObject(input) {
   const newCard = document.createElement("div"); // create a div
   injectObject(input, newCard);
-} //testingtesting
+}
 
 DOMSelectors.button.addEventListener("click", function (event) {
   event.preventDefault(); // don't reload
