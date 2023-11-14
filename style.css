@@ -3,3 +3,7 @@
     text-align:center;
     align-items: center;
 }
+.userimage{
+    max-width: 500px;
+    max-height: 500px;
+}

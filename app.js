@@ -2,6 +2,8 @@ const DOMSelectors = {
   button: document.querySelector(".button"),
   cardlist: document.querySelector(".cardlist"),
   input: document.querySelector(".firstName"),
+  imageID: document.querySelector(".image"),
+  header: document.querySelector(".header"),
 };
 function clearInputField(input) {
   input.value = ""; // self explanatory
@@ -15,12 +17,13 @@ function deleteObject(event) {
     selectedObject.parentElement.remove(); // delete the whole div
   }
 }
-function injectObject(input, card) {
-  if (input) {
+function injectObject(header, input, card, image) {
+  if (input && image && header) {
     // if the input is not null please continue wtih the code
     card.innerHTML = `<div class="innercard">
-    <h1>THIS IS YOUR CARD!!! WOAH!!!!</h1>
+    <h1> ${header}</h1>
     <p>${input}</p> <!-- put input --!>
+    <img class="userimage" src="${image}">
   </div>
   <button class="delete-button">Delete</button>`; // make the div's paragraph have the input and the delete button
     DOMSelectors.cardlist.appendChild(card); // put new card in cardlist
@@ -29,15 +32,19 @@ function injectObject(input, card) {
       .addEventListener("click", deleteObject); // if delete button clicked, run deleteObject
   }
 }
-function createObject(input) {
+function createObject(header, input, image) {
   const newCard = document.createElement("div"); // create a div
   newCard.classList.add("carddiv"); // adds "carddiv" to class list
-  injectObject(input, newCard);
+  injectObject(header, input, newCard, image);
 }
 
 DOMSelectors.button.addEventListener("click", function (event) {
   event.preventDefault(); // don't reload
   const input = DOMSelectors.input.value; // take user input
-  createObject(input); // calls injectObject
-  clearInputField(DOMSelectors.input); //clears inputfield
+  const userImage = DOMSelectors.imageID.value;
+  const userHeader = DOMSelectors.header.value;
+  createObject(userHeader, input, userImage); // calls injectObject
+  clearInputField(DOMSelectors.input);
+  clearInputField(DOMSelectors.imageID);
+  clearInputField(DOMSelectors.header);
 });
